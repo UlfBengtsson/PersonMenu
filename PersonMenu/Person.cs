@@ -10,7 +10,7 @@ namespace PersonMenu
         public string lastName;
         int age;
 
-        public Person(){}   // Zero Constructor - If we don´t create any constructor then C# compiler will add this one for ous.
+        public Person() { }   // Zero Constructor - If we don´t create any constructor then C# compiler will add this one for ous.
 
         public Person(string firstName, string lastName)    // When we Overload a Constructor or Method, it the input types that are the key for the computer to see the diffrence between them(not the verible name).
         {
@@ -18,9 +18,21 @@ namespace PersonMenu
             this.lastName = lastName;
         }
 
+        public Person(string firstName, string lastName, int age) : this(firstName, lastName)
+        {
+            this.age = age;
+        }
+
         public void SayHello()
         {
-            Console.WriteLine("Hello! My name is " + FirstName + " " + lastName);
+            Console.Write("Hello! My name is " + FirstName + " " + lastName);
+
+            if (age > 0)
+            {
+                Console.Write(" im " + age + " years old");
+            }
+
+            Console.WriteLine();
         }
     }
 }
