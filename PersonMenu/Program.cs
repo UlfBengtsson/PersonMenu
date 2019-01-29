@@ -59,7 +59,8 @@ namespace PersonMenu
                         Console.WriteLine("Not a valid selection.");
                         break;
                 }
-                Console.ReadKey();
+                Console.WriteLine("Press any key to continue.");
+                Console.ReadKey(true);// Dose not print key to screen
                 Console.Clear();
             }
 
