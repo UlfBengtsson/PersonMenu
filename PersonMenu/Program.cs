@@ -1,27 +1,26 @@
-﻿using System;
+﻿using Lexicon.CSharp.InfoGenerator;
+using System;
 using System.Collections.Generic;
 
 namespace PersonMenu
 {
     class Program
     {
+        static InfoGenerator infoGen = new InfoGenerator(DateTime.Now.Millisecond);
         static void Main(string[] args)
         {
             List<Person> people = new List<Person>();
 
-
-            /*
+            /**
             Person ulf = new Person();
             ulf.FirstName = "Ulf";
             ulf.lastName = "Bengtsson";
+            //ulf.age = 99;
             ulf.SayHello();
-
+            
             Person erik = new Person("Erik", "Svensson");   // Smart way to use a Constructor(Overload) to simplefie our work.11
             erik.SayHello();
-            
 
-
-            
             people.Add(new Person("Ulf", "Bengtsson", 37)); // Adds ulf to the list of people, we dont need to create a verible first and then store it in the list.
             people.Add(new Person("Erik", "Svensson", 39));
             people.Add(new Person("Niklas", "Yngvesson"));
@@ -38,7 +37,9 @@ namespace PersonMenu
                 Console.WriteLine(
                     "--- People menu ---\n" +
                     "1: Add Person to list\n" +
-                    "2: Show list\n" + 
+                    "2: Show list\n" +
+                    "3: Add Random Person to list\n" +
+                    "4: Remove Person from list\n" +
                     "0: Exit program"
                     );
                 int selection = AskUserForNumberX("Select");
@@ -46,10 +47,16 @@ namespace PersonMenu
                 switch (selection)
                 {
                     case 1:
-                        people.Add( CreatePerson() );
+                        people.Add(CreatePerson());
                         break;
                     case 2:
                         PrintList(people);
+                        break;
+                    case 3:
+                        people.Add( CreateRandomPerson() );
+                        break;
+                    case 4:
+                        RemovePersonFromList(people);
                         break;
                     case 0:
                         keepAlive = false;
@@ -64,12 +71,52 @@ namespace PersonMenu
                 Console.Clear();
             }
 
-            
+
+        }
+
+        static void RemovePersonFromList(List<Person> people)
+        {
+            bool notFound = true;
+
+            Console.WriteLine("--- Remove person ---" );
+            PrintList(people);
+            int selected = AskUserForNumberX("number of person");
+
+            foreach (Person item in people)
+            {
+                if (item.Id == selected)
+                {
+                    people.Remove(item);
+                    notFound = false;
+                    break;
+                }
+            }
+
+            if (notFound)
+            {
+                Console.WriteLine("No Person with that number was found.");
+            }
+            else
+            {
+                Console.WriteLine("Person with Id: " + selected + " has bin removed.");
+            }
+        }
+
+        private static Person CreateRandomPerson()
+        {
+            return new Person( 
+                infoGen.NextFirstName(), 
+                infoGen.NextLastName(), 
+                infoGen.Next(1,120));//Age 1-120
         }
 
         static void PrintList(List<Person> people)
         {
-            people.ForEach(p => p.SayHello());
+            foreach (Person item in people)
+            {
+                Console.WriteLine(item);
+            }
+            //people.ForEach(p => p.SayHello());
         }
 
         static Person CreatePerson()

@@ -5,4 +5,10 @@
     <TargetFramework>netcoreapp2.1</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Reference Include="InfoGenerator">
+      <HintPath>..\..\..\..\Downloads\arenafighterassignment (1)\InfoGenerator.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
 </Project>
